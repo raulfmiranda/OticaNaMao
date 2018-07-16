@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ótica na Mão</string>
+    <string name="menuItem1">Cadastrar Cliente</string>
+    <string name="menuItem2">Consultar Cliente</string>
+    <string name="menuItem3">Cadastrar Evento</string>
+    <string name="menuItem4">Consultar Evento</string>
+</resources>
