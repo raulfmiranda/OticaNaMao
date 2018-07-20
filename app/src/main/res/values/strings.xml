@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Ótica na Mão</string>
-    <string name="menuItem1">Cadastrar Cliente</string>
-    <string name="menuItem2">Consultar Cliente</string>
-    <string name="menuItem3">Cadastrar Evento</string>
-    <string name="menuItem4">Consultar Evento</string>
+    <string name="cadastrar_cliente">Cadastrar Cliente</string>
+    <string name="buscar_cliente">Buscar Cliente</string>
+    <string name="cadastrar_evento">Cadastrar Evento</string>
+    <string name="buscar_evento">Buscar Evento</string>
+    <string name="tela_inicial">Tela Inicial</string>
+    <string name="nome_do_cliente">Nome do Cliente</string>
+    <string name="endereco_do_cliente">Endereço do Cliente</string>
 </resources>

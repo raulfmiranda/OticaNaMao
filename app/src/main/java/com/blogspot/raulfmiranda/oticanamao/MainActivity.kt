@@ -3,12 +3,12 @@ package com.blogspot.raulfmiranda.oticanamao
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
+import com.blogspot.raulfmiranda.oticanamao.fragments.*
 import com.mikepenz.materialdrawer.Drawer
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         createDrawer()
+        addFragment(TelaInicialFragment(), R.id.frmFragmentContainer)
     }
 
     // MaterialDrawerKt: https://github.com/zsmb13/MaterialDrawerKt
@@ -42,31 +43,42 @@ class MainActivity : AppCompatActivity() {
         mDrawer = drawer {
             accountHeader {
                 background = R.color.colorPrimaryDark
-                profile("Nome Sobrenome", "exemplo@email.com") { }
+                profile("Construcar", "construcar@gmail.com") { }
             }
-
-            primaryItem(getString(R.string.menuItem1)) {
+            primaryItem(getString(R.string.tela_inicial)) {
                 onClick { _ ->
-                    Toast.makeText(this@MainActivity, getString(R.string.menuItem1), Toast.LENGTH_SHORT).show()
-                    false
-                }
-            }
-            primaryItem(getString(R.string.menuItem2)) {
-                onClick { _ ->
-                    Toast.makeText(this@MainActivity, getString(R.string.menuItem2), Toast.LENGTH_SHORT).show()
+                    supportActionBar?.title = getString(R.string.tela_inicial)
+                    replaceFragment(TelaInicialFragment(), R.id.frmFragmentContainer)
                     false
                 }
             }
             divider {  }
-            primaryItem(getString(R.string.menuItem3)) {
+            primaryItem(getString(R.string.cadastrar_cliente)) {
                 onClick { _ ->
-                    Toast.makeText(this@MainActivity, getString(R.string.menuItem3), Toast.LENGTH_SHORT).show()
+                    supportActionBar?.title = getString(R.string.cadastrar_cliente)
+                    replaceFragment(CadastrarClienteFragment(), R.id.frmFragmentContainer)
                     false
                 }
             }
-            primaryItem(getString(R.string.menuItem4)) {
+            primaryItem(getString(R.string.buscar_cliente)) {
                 onClick { _ ->
-                    Toast.makeText(this@MainActivity, getString(R.string.menuItem4), Toast.LENGTH_SHORT).show()
+                    supportActionBar?.title = getString(R.string.buscar_cliente)
+                    replaceFragment(BuscarClienteFragment(), R.id.frmFragmentContainer)
+                    false
+                }
+            }
+            divider {  }
+            primaryItem(getString(R.string.cadastrar_evento)) {
+                onClick { _ ->
+                    supportActionBar?.title = getString(R.string.cadastrar_evento)
+                    replaceFragment(CadastrarEventoFragment(), R.id.frmFragmentContainer)
+                    false
+                }
+            }
+            primaryItem(getString(R.string.buscar_evento)) {
+                onClick { _ ->
+                    supportActionBar?.title = getString(R.string.buscar_evento)
+                    replaceFragment(BuscarEventoFragment(), R.id.frmFragmentContainer)
                     false
                 }
             }
