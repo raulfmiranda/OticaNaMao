@@ -7,4 +7,13 @@
     <string name="tela_inicial">Tela Inicial</string>
     <string name="nome_do_cliente">Nome do Cliente</string>
     <string name="endereco_do_cliente">Endereço do Cliente</string>
+    <string name="celular">Celular</string>
+    <string name="telefone">Telefone</string>
+    <string name="email">E-mail</string>
+    <string name="local_da_conta">Local da Conta</string>
+    <string name="tirar_foto_da_consulta">Tirar foto da consulta</string>
+    <string name="tirar_foto_do_documento">Tirar foto do documento</string>
+    <string name="nome_do_recebedor_do_oculos">Nome do Recebedor do Óculos</string>
+    <string name="data_recebimento_oculos">Data Receb. Óculos</string>
+    <string name="data_ultima_consulta">Data última consulta</string>
 </resources>

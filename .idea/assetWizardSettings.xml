@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_menu_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_add_a_photo_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,9 +33,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_menu_white_24dp" />
+                            <entry key="color" value="3aafa9" />
+                            <entry key="height" value="96" />
+                            <entry key="outputName" value="ic_add_a_photo_gray_24dp" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\Raul" />
+                            <entry key="width" value="96" />
                           </map>
                         </option>
                       </PersistentState>

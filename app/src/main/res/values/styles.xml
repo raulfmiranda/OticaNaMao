@@ -6,6 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="editTextStyle">@style/EditTextPadrao</item>-->
+    </style>
+
+    <style name="BotaoPrimario" parent="android:Widget.Button">
+        <item name="android:background">@drawable/botao_primario_redondo</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BotaoSecundario" parent="android:Widget.Button">
+        <item name="android:background">@drawable/botao_secundario_redondo</item>
+        <item name="android:textColor">@color/primary_dark</item>
+    </style>
+
+    <style name="EditTextPadrao" parent="Base.V7.Widget.AppCompat.EditText">
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>

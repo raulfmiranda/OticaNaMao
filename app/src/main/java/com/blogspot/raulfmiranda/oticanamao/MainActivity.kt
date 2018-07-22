@@ -67,21 +67,21 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
-            divider {  }
-            primaryItem(getString(R.string.cadastrar_evento)) {
-                onClick { _ ->
-                    supportActionBar?.title = getString(R.string.cadastrar_evento)
-                    replaceFragment(CadastrarEventoFragment(), R.id.frmFragmentContainer)
-                    false
-                }
-            }
-            primaryItem(getString(R.string.buscar_evento)) {
-                onClick { _ ->
-                    supportActionBar?.title = getString(R.string.buscar_evento)
-                    replaceFragment(BuscarEventoFragment(), R.id.frmFragmentContainer)
-                    false
-                }
-            }
+//            divider {  }
+//            primaryItem(getString(R.string.cadastrar_evento)) {
+//                onClick { _ ->
+//                    supportActionBar?.title = getString(R.string.cadastrar_evento)
+//                    replaceFragment(CadastrarEventoFragment(), R.id.frmFragmentContainer)
+//                    false
+//                }
+//            }
+//            primaryItem(getString(R.string.buscar_evento)) {
+//                onClick { _ ->
+//                    supportActionBar?.title = getString(R.string.buscar_evento)
+//                    replaceFragment(BuscarEventoFragment(), R.id.frmFragmentContainer)
+//                    false
+//                }
+//            }
         }
     }
 }
