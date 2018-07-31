@@ -3,6 +3,7 @@ package com.blogspot.raulfmiranda.oticanamao.fragments
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -18,8 +19,10 @@ import android.widget.ImageView
 import android.widget.Toast
 
 import com.blogspot.raulfmiranda.oticanamao.R
+import com.blogspot.raulfmiranda.oticanamao.dataclasses.Cliente
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_cadastrar_cliente.*
 import kotlinx.android.synthetic.main.fragment_cadastrar_cliente.view.*
 import java.io.File
@@ -33,6 +36,7 @@ class CadastrarClienteFragment : Fragment() {
     private val maxWidthHeight = 800
     private var arquivoFotoConsulta: File? =  null
     private var arquivoFotoDocumento: File? =  null
+    private var clientes = mutableListOf<Cliente>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -64,8 +68,49 @@ class CadastrarClienteFragment : Fragment() {
             }
         }
 
+        view.btnCadEditCliente.setOnClickListener {
+
+            val cliente = Cliente(
+                    edtNomeCliente.text.toString(),
+                    edtEnderecoCliente.text.toString(),
+                    edtFone1.text.toString(),
+                    edtFone2.text.toString(),
+                    edtEmail.text.toString(),
+                    edtLocalConta.text.toString(),
+                    arquivoFotoConsulta?.absolutePath.toString(),
+                    arquivoFotoDocumento?.absolutePath.toString(),
+                    edtDataRecOculos.text.toString(),
+                    edtNomeRecebedorOculos.text.toString(),
+                    edtDataUltConsulta.text.toString()
+            )
+
+            clientes.add(cliente)
+            edtNomeCliente.setText("")
+            edtEnderecoCliente.setText("")
+            edtFone1.setText("")
+            edtFone2.setText("")
+            edtEmail.setText("")
+            edtLocalConta.setText("")
+            arquivoFotoConsulta = null
+            arquivoFotoDocumento = null
+            edtDataRecOculos.setText("")
+            edtNomeRecebedorOculos.setText("")
+            edtDataUltConsulta.setText("")
+        }
+
         // Inflate the layout for this fragment
         return view
+    }
+
+    override fun onDestroy() {
+        val prefs = context?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val prefsEditor = prefs?.edit()
+        val gson = Gson()
+        val json = gson.toJson(clientes)
+        prefsEditor?.putString("clientes", json)
+        prefsEditor?.apply()
+
+        super.onDestroy()
     }
 
     private fun geraCaminhoFoto(): String? {

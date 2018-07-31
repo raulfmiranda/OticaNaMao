@@ -1,7 +1,5 @@
 package com.blogspot.raulfmiranda.oticanamao.dataclasses
 
-import java.util.*
-
 data class Cliente(
         var nome: String,
         var endereco: String,
@@ -11,7 +9,7 @@ data class Cliente(
         var localConta: String,
         var caminhoFotoConsulta: String,
         var caminhoFotoDocumento: String,
-        var dataRecebimentoOculos: Date,
+        var dataRecebimentoOculos: String,
         var nomeRecebedorOculos: String,
-        var dataUltimaConsulta: Date
+        var dataUltimaConsulta: String
 )

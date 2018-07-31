@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Ótica na Mão</string>
     <string name="cadastrar_cliente">Cadastrar Cliente</string>
+    <string name="tela_inicial">Tela Inicial</string>
     <string name="buscar_cliente">Buscar Cliente</string>
     <string name="cadastrar_evento">Cadastrar Evento</string>
     <string name="buscar_evento">Buscar Evento</string>
-    <string name="tela_inicial">Tela Inicial</string>
     <string name="nome_do_cliente">Nome do Cliente</string>
     <string name="endereco_do_cliente">Endereço do Cliente</string>
     <string name="celular">Celular</string>
@@ -16,4 +16,5 @@
     <string name="nome_do_recebedor_do_oculos">Nome do Recebedor do Óculos</string>
     <string name="data_recebimento_oculos">Data Receb. Óculos</string>
     <string name="data_ultima_consulta">Data última consulta</string>
+    <string name="mensagem_inicial">Bem-vindo(a) ao Ótica na Mão. Clique no ícone superior esquerdo ou deslize seu dedo do canto esquerdo da tela para à direita para ver o menu de opções.</string>
 </resources>
