@@ -1,6 +1,5 @@
 package com.blogspot.raulfmiranda.oticanamao.fragments
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -20,6 +19,7 @@ import android.widget.Toast
 
 import com.blogspot.raulfmiranda.oticanamao.R
 import com.blogspot.raulfmiranda.oticanamao.dataclasses.Cliente
+import com.blogspot.raulfmiranda.oticanamao.preferences.ClientesPrefs
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.gson.Gson
@@ -70,33 +70,44 @@ class CadastrarClienteFragment : Fragment() {
 
         view.btnCadEditCliente.setOnClickListener {
 
-            val cliente = Cliente(
-                    edtNomeCliente.text.toString(),
-                    edtEnderecoCliente.text.toString(),
-                    edtFone1.text.toString(),
-                    edtFone2.text.toString(),
-                    edtEmail.text.toString(),
-                    edtLocalConta.text.toString(),
-                    arquivoFotoConsulta?.absolutePath.toString(),
-                    arquivoFotoDocumento?.absolutePath.toString(),
-                    edtDataRecOculos.text.toString(),
-                    edtNomeRecebedorOculos.text.toString(),
-                    edtDataUltConsulta.text.toString()
-            )
+            if(!view.edtNomeCliente.text.isNullOrBlank()) {
 
-            clientes.add(cliente)
-            edtNomeCliente.setText("")
-            edtEnderecoCliente.setText("")
-            edtFone1.setText("")
-            edtFone2.setText("")
-            edtEmail.setText("")
-            edtLocalConta.setText("")
-            arquivoFotoConsulta = null
-            arquivoFotoDocumento = null
-            edtDataRecOculos.setText("")
-            edtNomeRecebedorOculos.setText("")
-            edtDataUltConsulta.setText("")
+                val cliente = Cliente(
+                        edtNomeCliente.text.toString().trim(),
+                        edtEnderecoCliente.text.toString().trim(),
+                        edtFone1.text.toString(),
+                        edtFone2.text.toString(),
+                        edtEmail.text.toString().trim(),
+                        edtLocalConta.text.toString().trim(),
+                        arquivoFotoConsulta?.absolutePath.toString(),
+                        arquivoFotoDocumento?.absolutePath.toString(),
+                        edtDataRecOculos.text.toString(),
+                        edtNomeRecebedorOculos.text.toString().trim(),
+                        edtDataUltConsulta.text.toString()
+                )
+
+                clientes.add(cliente)
+                edtNomeCliente.setText("")
+                edtEnderecoCliente.setText("")
+                edtFone1.setText("")
+                edtFone2.setText("")
+                edtEmail.setText("")
+                edtLocalConta.setText("")
+                arquivoFotoConsulta = null
+                arquivoFotoDocumento = null
+                edtDataRecOculos.setText("")
+                edtNomeRecebedorOculos.setText("")
+                edtDataUltConsulta.setText("")
+                imgFotoConsulta.setImageResource(R.drawable.ic_add_a_photo_gray_48dp)
+                imgFotoDocumento.setImageResource(R.drawable.ic_add_a_photo_gray_48dp)
+
+                Toast.makeText(context, "Cliente cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Faltou o nome do cliente!", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        clientes = ClientesPrefs.recuperarClientes(context)
 
         // Inflate the layout for this fragment
         return view

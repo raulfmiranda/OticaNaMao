@@ -17,4 +17,5 @@
     <string name="data_recebimento_oculos">Data Receb. Óculos</string>
     <string name="data_ultima_consulta">Data última consulta</string>
     <string name="mensagem_inicial">Bem-vindo(a) ao Ótica na Mão. Clique no ícone superior esquerdo ou deslize seu dedo do canto esquerdo da tela para à direita para ver o menu de opções.</string>
+    <string name="nenhum_cliente_cadastrado">Nenhum Cliente Cadastrado</string>
 </resources>

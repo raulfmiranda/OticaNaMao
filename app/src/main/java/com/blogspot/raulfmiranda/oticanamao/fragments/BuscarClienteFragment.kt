@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 import com.blogspot.raulfmiranda.oticanamao.R
 import com.blogspot.raulfmiranda.oticanamao.adapters.ClientesAdapter
 import com.blogspot.raulfmiranda.oticanamao.dataclasses.Cliente
+import com.blogspot.raulfmiranda.oticanamao.preferences.ClientesPrefs
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_buscar_cliente.*
@@ -28,16 +30,18 @@ class BuscarClienteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val prefs = context?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val json = prefs?.getString("clientes", "")
+        val clientes = ClientesPrefs.recuperarClientes(context)
 
-        if(json != null && json.length > 0) {
-            val clientes: MutableList<Cliente> = Gson().fromJson(json, object : TypeToken<MutableList<Cliente>>() {}.type)
+        if(clientes.size > 0) {
+            txtNenhumCliente.visibility = TextView.GONE
+            recClientes.visibility = RecyclerView.VISIBLE
             recClientes.layoutManager = LinearLayoutManager(activity)
             val adapter = ClientesAdapter(clientes)
             recClientes.adapter = adapter
+        } else {
+            txtNenhumCliente.visibility = TextView.VISIBLE
+            recClientes.visibility = RecyclerView.GONE
         }
+
     }
-
-
 }
