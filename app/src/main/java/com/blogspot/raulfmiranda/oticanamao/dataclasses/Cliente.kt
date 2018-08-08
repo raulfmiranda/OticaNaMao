@@ -1,5 +1,7 @@
 package com.blogspot.raulfmiranda.oticanamao.dataclasses
 
+import java.io.Serializable
+
 data class Cliente(
         var nome: String,
         var endereco: String,
@@ -12,4 +14,4 @@ data class Cliente(
         var dataRecebimentoOculos: String,
         var nomeRecebedorOculos: String,
         var dataUltimaConsulta: String
-)
+): Serializable

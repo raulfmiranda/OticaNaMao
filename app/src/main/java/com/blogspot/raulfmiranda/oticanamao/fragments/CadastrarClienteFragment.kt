@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
@@ -25,6 +26,7 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_cadastrar_cliente.*
 import kotlinx.android.synthetic.main.fragment_cadastrar_cliente.view.*
+import kotlinx.android.synthetic.main.row_cliente.*
 import java.io.File
 
 class CadastrarClienteFragment : Fragment() {
@@ -37,6 +39,11 @@ class CadastrarClienteFragment : Fragment() {
     private var arquivoFotoConsulta: File? =  null
     private var arquivoFotoDocumento: File? =  null
     private var clientes = mutableListOf<Cliente>()
+    private var clienteCarregado: Cliente? = null
+
+    companion object {
+        val EXTRA_CLIENTE = "clientextra"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,8 +54,11 @@ class CadastrarClienteFragment : Fragment() {
 
         view.BtnAddFotoConsulta.setOnClickListener {
 
-            if(activity?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                    activity?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), CAMERA_PERMISSION_CODE_CONSULTA)
+
             } else {
                 val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                 arquivoFotoConsulta = File(geraCaminhoFoto())
@@ -58,8 +68,11 @@ class CadastrarClienteFragment : Fragment() {
         }
 
         view.BtnAddFotoDocumento.setOnClickListener {
-            if(activity?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                    activity?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), CAMERA_PERMISSION_CODE_DOCUMENTO)
+
             } else {
                 val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                 arquivoFotoDocumento = File(geraCaminhoFoto())
@@ -111,6 +124,47 @@ class CadastrarClienteFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            if(!it.isEmpty) {
+                clienteCarregado = it.getSerializable(EXTRA_CLIENTE) as Cliente
+
+                if(clienteCarregado != null) {
+                    edtNomeCliente.setText(clienteCarregado?.nome)
+                    edtEnderecoCliente.setText(clienteCarregado?.endereco)
+                    edtFone1.setText(clienteCarregado?.fone1)
+                    edtFone2.setText(clienteCarregado?.fone2)
+                    edtEmail.setText(clienteCarregado?.email)
+                    edtLocalConta.setText(clienteCarregado?.localConta)
+                    edtDataRecOculos.setText(clienteCarregado?.dataRecebimentoOculos)
+                    edtNomeRecebedorOculos.setText(clienteCarregado?.nomeRecebedorOculos)
+                    edtDataUltConsulta.setText(clienteCarregado?.dataUltimaConsulta)
+                    btnCadEditCliente.setText("Editar Cliente")
+
+                    arquivoFotoConsulta = File(clienteCarregado?.caminhoFotoConsulta)
+                    arquivoFotoDocumento = File(clienteCarregado?.caminhoFotoDocumento)
+                    setBitmapConsulta()
+                    setBitmapDocumento()
+
+                    edtNomeCliente.isFocusable = false
+                    edtEnderecoCliente.isFocusable = false
+                    edtFone1.isFocusable = false
+                    edtFone2.isFocusable = false
+                    edtEmail.isFocusable = false
+                    edtLocalConta.isFocusable = false
+                    edtDataRecOculos.isFocusable = false
+                    edtNomeRecebedorOculos.isFocusable = false
+                    edtDataUltConsulta.isFocusable = false
+                    BtnAddFotoConsulta.isEnabled = false
+                    BtnAddFotoDocumento.isEnabled = false
+                    btnCadEditCliente.isEnabled = false
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -177,26 +231,33 @@ class CadastrarClienteFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if(requestCode == CAMERA_REQUEST_CONSULTA && resultCode == Activity.RESULT_OK) {
-            val bitmapConsulta = BitmapFactory.decodeFile(arquivoFotoConsulta?.absolutePath)
-
-            bitmapConsulta?.let {
-//                val bitmapConsultaReduzido = Bitmap.createScaledBitmap(it, 400, 400, true)
-                val bitmapConsultaReduzido = resizeBitmap(it, maxWidthHeight, maxWidthHeight)
-                imgFotoConsulta.setImageBitmap(bitmapConsultaReduzido)
-                imgFotoConsulta.scaleType = ImageView.ScaleType.FIT_CENTER
-                imgFotoConsulta.setTag(arquivoFotoConsulta?.absolutePath)
-            }
+            setBitmapConsulta()
         }
 
         if(requestCode == CAMERA_REQUEST_DOCUMENTO && resultCode == Activity.RESULT_OK) {
-            val bitmapDocumento = BitmapFactory.decodeFile(arquivoFotoDocumento?.absolutePath)
-            bitmapDocumento?.let {
-//                val bitmapDocumentoReduzido = Bitmap.createScaledBitmap(it, 200, 200, true)
-                val bitmapDocumentoReduzido = resizeBitmap(it, maxWidthHeight, maxWidthHeight)
-                imgFotoDocumento.setImageBitmap(bitmapDocumentoReduzido)
-                imgFotoDocumento.scaleType = ImageView.ScaleType.FIT_CENTER
-                imgFotoDocumento.setTag(arquivoFotoConsulta?.absolutePath)
-            }
+            setBitmapDocumento()
+        }
+    }
+
+    private fun setBitmapConsulta() {
+        val bitmapConsulta = BitmapFactory.decodeFile(arquivoFotoConsulta?.absolutePath)
+        bitmapConsulta?.let {
+            //                val bitmapConsultaReduzido = Bitmap.createScaledBitmap(it, 400, 400, true)
+            val bitmapConsultaReduzido = resizeBitmap(it, maxWidthHeight, maxWidthHeight)
+            imgFotoConsulta.setImageBitmap(bitmapConsultaReduzido)
+            imgFotoConsulta.scaleType = ImageView.ScaleType.FIT_CENTER
+            imgFotoConsulta.setTag(arquivoFotoConsulta?.absolutePath)
+        }
+    }
+
+    private fun setBitmapDocumento() {
+        val bitmapDocumento = BitmapFactory.decodeFile(arquivoFotoDocumento?.absolutePath)
+        bitmapDocumento?.let {
+            //                val bitmapDocumentoReduzido = Bitmap.createScaledBitmap(it, 200, 200, true)
+            val bitmapDocumentoReduzido = resizeBitmap(it, maxWidthHeight, maxWidthHeight)
+            imgFotoDocumento.setImageBitmap(bitmapDocumentoReduzido)
+            imgFotoDocumento.scaleType = ImageView.ScaleType.FIT_CENTER
+            imgFotoDocumento.setTag(arquivoFotoConsulta?.absolutePath)
         }
     }
 
